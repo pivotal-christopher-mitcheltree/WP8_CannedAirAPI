@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using CannedAirAPI.Models;
 using CannedAirAPI.Services;
 using GalaSoft.MvvmLight;
+using Newtonsoft.Json;
 
 namespace CannedAirAPI.ViewModel
 {
@@ -28,14 +30,15 @@ namespace CannedAirAPI.ViewModel
             UserLogin();
         }
 
-        public void UserLogin()
+        public async void UserLogin()
         {
             var headers = new Dictionary<string, string>();
             headers.Add("username", "gweresch" );
             headers.Add("password", "password");
             headers.Add("environment", "sandbox");
             const string url = "http://cannedair-staging.cfapps.io/v1/login";
-            _loginservice.GetFromUri(url, headers);
+            var loginResponse = await _loginservice.GetFromUri(url, headers);
+            var loginInfo = JsonConvert.DeserializeObject<Login>(loginResponse);
         }
     }
 }

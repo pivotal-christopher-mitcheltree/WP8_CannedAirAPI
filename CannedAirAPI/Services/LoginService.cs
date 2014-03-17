@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using CannedAirAPI.Models;
 using Newtonsoft.Json;
 
 namespace CannedAirAPI.Services
