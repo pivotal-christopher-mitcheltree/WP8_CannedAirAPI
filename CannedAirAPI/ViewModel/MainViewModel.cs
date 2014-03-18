@@ -22,46 +22,13 @@ namespace CannedAirAPI.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private readonly ILoginService _loginservice; 
+        private readonly IMainService _mainservice; 
         /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
+        /// Initializes a new instance of the LoginViewModel class.
         /// </summary>
-        public MainViewModel(ILoginService loginservice)
+        public MainViewModel(IMainService mainservice)
         {
-            _loginservice = loginservice;
-        }
-
-        private string _username = "tnandakumaran";
-        public string Username
-        {
-            get { return _username; }
-            set
-            {
-                _username = value;
-                RaisePropertyChanged("Username");
-            }
-        }
-
-        private string _password = "password";
-        public string Password
-        {
-            get { return _password; }
-            set
-            {
-                _password = value;
-                RaisePropertyChanged("Password");
-            }
-        }
-
-        private int _isInvalidLogin;
-        public int IsInvalidLogin
-        {
-            get { return _isInvalidLogin; }
-            set
-            {
-                _isInvalidLogin = value;
-                RaisePropertyChanged("IsInvalidLogin");
-            }
+            _mainservice = mainservice;
         }
 
         private bool _isLoading;
@@ -74,28 +41,5 @@ namespace CannedAirAPI.ViewModel
                 RaisePropertyChanged("IsLoading");
             }
         }
-
-        public async void UserLogin()
-        {
-            IsLoading = true;
-            var headers = new Dictionary<string, string>();
-            headers.Add("username", Username );
-            headers.Add("password", Password);
-            headers.Add("environment", "sandbox");
-            const string url = "http://cannedair-staging.cfapps.io/v1/login";
-            var response = await _loginservice.GetFromUri(url, headers);
-            if (!String.IsNullOrEmpty(response))
-            {
-                IsInvalidLogin = 0;
-                var loginResponse = JsonConvert.DeserializeObject<Login>(response);
-                CurrentUser.Initialize(headers["username"], headers["password"], loginResponse.OpenAirId, loginResponse.RoleId);
-            }
-            else
-            {
-                IsInvalidLogin = 1;
-            }
-            IsLoading = false;
-        }
     }
-
 }

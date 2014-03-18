@@ -32,6 +32,8 @@ namespace CannedAirAPI.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<ILoginService, LoginService>();
+            SimpleIoc.Default.Register<IMainService, MainService>();
+            SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<MainViewModel>();
             ////if (ViewModelBase.IsInDesignModeStatic)
             ////{
@@ -43,8 +45,14 @@ namespace CannedAirAPI.ViewModel
             ////    // Create run time view services and models
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
+        }
 
-            SimpleIoc.Default.Register<MainViewModel>();
+        public LoginViewModel Login
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<LoginViewModel>();
+            }
         }
 
         public MainViewModel Main
