@@ -79,10 +79,12 @@ namespace CannedAirAPI.ViewModel
         public async Task<bool> UserLogin()
         {
             IsLoading = true;
-            var headers = new Dictionary<string, string>();
-            headers.Add("username", Username );
-            headers.Add("password", Password);
-            headers.Add("environment", "sandbox");
+            var headers = new Dictionary<string, string>
+            {
+                {"username", Username},
+                {"password", Password},
+                {"environment", "sandbox"}
+            };
             const string url = "http://cannedair-staging.cfapps.io/v1/login";
             var response = await _loginservice.GetCurrentUser(url, headers);
             IsLoading = false;

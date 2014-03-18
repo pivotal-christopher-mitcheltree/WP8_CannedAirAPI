@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:CannedAirAPI.Controls"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -37,21 +38,36 @@
                 </phone:Pivot.HeaderTemplate>
                 
                 <phone:PivotItem Header="Current Week">
-                    <ProgressBar x:Name="CurrentWeekBar"
-                                 IsIndeterminate="True"
-                                 IsEnabled="{Binding IsLoading}"
-                                 Opacity="{Binding IsLoading}" />
-                    
-                    
-                    
-                    
+                    <Grid x:Name="CurrentWeekGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <controls:Timesheet x:Name="CurrentWeekTimesheet"
+                                            DataContext="{Binding CurrentTimesheet}"
+                                            Grid.Row="0" />
+                        <ProgressBar x:Name="CurrentWeekProgressBar"
+                                     IsIndeterminate="True"
+                                     IsEnabled="{Binding IsLoading}"
+                                     Opacity="{Binding IsLoading}"
+                                     Grid.Row="1" />
+                    </Grid>
                 </phone:PivotItem>
                 
                 <phone:PivotItem Header="Next Week">
-                    <ProgressBar x:Name="NextWeekBar"
+                    <Grid x:Name="NextWeekGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <controls:Timesheet x:Name="NextWeekTimesheet"
+                                            DataContext="{Binding NextTimesheet}" Grid.Row="0" />
+                    <ProgressBar x:Name="NextWeekProgressBar"
                                  IsIndeterminate="True"
                                  IsEnabled="{Binding IsLoading}"
-                                 Opacity="{Binding IsLoading}" />
+                                 Opacity="{Binding IsLoading}"
+                                 Grid.Row="1"/>
+                    </Grid>
                 </phone:PivotItem>
                 
                 <phone:PivotItem Header="Time Off">
@@ -63,10 +79,20 @@
                 </phone:PivotItem>
                 
                 <phone:PivotItem Header="Previous Week">
-                    <ProgressBar x:Name="PreviousWeekBar"
-                                 IsIndeterminate="True"
-                                 IsEnabled="{Binding IsLoading}"
-                                 Opacity="{Binding IsLoading}"/>
+                    <Grid x:Name="PreviousWeekGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <controls:Timesheet x:Name="PreviousWeekTimesheet"
+                                            DataContext="{Binding PreviousTimesheet}"
+                                            Grid.Row="0" />
+                        <ProgressBar x:Name="PreviousWeekProgressBar"
+                                     IsIndeterminate="True"
+                                     IsEnabled="{Binding IsLoading}"
+                                     Opacity="{Binding IsLoading}"
+                                     Grid.Row="1" />
+                    </Grid>
                 </phone:PivotItem>
                 
             </phone:Pivot>

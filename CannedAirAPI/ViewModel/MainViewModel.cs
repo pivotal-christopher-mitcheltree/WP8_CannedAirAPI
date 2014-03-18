@@ -36,6 +36,40 @@ namespace CannedAirAPI.ViewModel
             }
         }
 
+        private Timesheet _previousTimesheet = new Timesheet();
+        public Timesheet PreviousTimesheet
+        {
+            get { return _previousTimesheet; }
+            set
+            {
+                _previousTimesheet = value;
+                RaisePropertyChanged("PreviousTimesheet");
+            }
+        }
+
+        private Timesheet _currentTimesheet = new Timesheet();
+        public Timesheet CurrentTimesheet
+        {
+            get { return _currentTimesheet; }
+            set
+            {
+                _currentTimesheet = value;
+                RaisePropertyChanged("CurrentTimesheet");
+            }
+        }
+
+        private Timesheet _nextTimesheet = new Timesheet();
+        public Timesheet NextTimesheet
+        {
+            get { return _nextTimesheet; }
+            set
+            {
+                _nextTimesheet = value;
+                RaisePropertyChanged("NextTimesheet");
+            }
+        }
+
+
         private List<Timesheet> _timesheets = new List<Timesheet>();
         public List<Timesheet> Timesheets
         {
@@ -43,9 +77,12 @@ namespace CannedAirAPI.ViewModel
             set
             {
                 _timesheets = value;
-                RaisePropertyChanged("Timesheets");
+                PreviousTimesheet = _timesheets[0];
+                CurrentTimesheet = _timesheets[1];
+                NextTimesheet = _timesheets[2];
             }
         }
+
 
         public MainViewModel(IMainService mainservice)
         {
@@ -62,19 +99,28 @@ namespace CannedAirAPI.ViewModel
             var startsAt = previousDate.Year + "-" + previousDate.Month + "-" + previousDate.Day;
             var endsAt = nextDate.Year + "-" + nextDate.Month + "-" + nextDate.Day;
 
-            var url = String.Format("http://cannedair-staging.cfapps.io/v1/users/{0}/timesheets?starts_at={1}&ends_at={2}", CurrentUser.Instance.OpenAirId, "2013-11-18", "2013-12-5"); //startsAt, endsAt); TODO: Fix!
+            var url = String.Format("http://cannedair-staging.cfapps.io/v1/users/{0}/timesheets?starts_at={1}&ends_at={2}", CurrentUser.Instance.OpenAirId, "2013-11-18", "2013-12-25"); //startsAt, endsAt); TODO: Fix!
 
             IsLoading = true;
             var response = await _mainservice.GetTimesheets(url);
+            var tmpList = new List<Timesheet>();
             if (!String.IsNullOrEmpty(response))
             {
                 var responseJsonArray = JArray.Parse(response);
                 foreach (var timesheet in responseJsonArray)
                 {
-                    Timesheets.Add(JsonConvert.DeserializeObject<Timesheet>(timesheet.ToString()));
+                    if (tmpList.Count == 3)
+                    {
+                        break;
+                    }
+                    tmpList.Add(JsonConvert.DeserializeObject<Timesheet>(timesheet.ToString()));
                 }
-//                var loginResponse = JsonConvert.DeserializeObject<Login>(response);
-//                CurrentUser.Initialize(headers["username"], headers["password"], loginResponse.OpenAirId, loginResponse.RoleId);
+                while (tmpList.Count < 3)
+                {
+                    var emptyTimesheet = new Timesheet {UserId = String.Empty, Id = String.Empty, StartsAt = String.Empty, EndsAt = String.Empty, Tasks = new List<Task>()};
+                    tmpList.Add(emptyTimesheet);
+                }
+                Timesheets = tmpList;
             }
             else
             {
