@@ -5,6 +5,7 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using CannedAirAPI.ViewModel;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using CannedAirAPI.Resources;
@@ -37,5 +38,13 @@ namespace CannedAirAPI
         //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
         //    ApplicationBar.MenuItems.Add(appBarMenuItem);
         //}
+        private void LoginButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var mvm = DataContext as MainViewModel;
+            if (mvm != null)
+            {
+                mvm.UserLogin();
+            }
+        }
     }
 }

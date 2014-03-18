@@ -29,26 +29,72 @@ namespace CannedAirAPI.ViewModel
         public MainViewModel(ILoginService loginservice)
         {
             _loginservice = loginservice;
-            UserLogin();
+        }
+
+        private string _username = "tnandakumaran";
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                _username = value;
+                RaisePropertyChanged("Username");
+            }
+        }
+
+        private string _password = "password";
+        public string Password
+        {
+            get { return _password; }
+            set
+            {
+                _password = value;
+                RaisePropertyChanged("Password");
+            }
+        }
+
+        private int _isInvalidLogin;
+        public int IsInvalidLogin
+        {
+            get { return _isInvalidLogin; }
+            set
+            {
+                _isInvalidLogin = value;
+                RaisePropertyChanged("IsInvalidLogin");
+            }
+        }
+
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged("IsLoading");
+            }
         }
 
         public async void UserLogin()
         {
+            IsLoading = true;
             var headers = new Dictionary<string, string>();
-            headers.Add("username", "gweresch" );
-            headers.Add("password", "password");
+            headers.Add("username", Username );
+            headers.Add("password", Password);
             headers.Add("environment", "sandbox");
             const string url = "http://cannedair-staging.cfapps.io/v1/login";
             var response = await _loginservice.GetFromUri(url, headers);
             if (!String.IsNullOrEmpty(response))
             {
+                IsInvalidLogin = 0;
                 var loginResponse = JsonConvert.DeserializeObject<Login>(response);
                 CurrentUser.Initialize(headers["username"], headers["password"], loginResponse.OpenAirId, loginResponse.RoleId);
             }
             else
             {
-                //something happens like error message
+                IsInvalidLogin = 1;
             }
+            IsLoading = false;
         }
     }
 
