@@ -11,27 +11,84 @@
     d:DesignHeight="480" d:DesignWidth="480"
     Loaded="Timesheet_OnLoaded">
 
-    <UserControl.Resources>
-        <ControlTemplate x:Name="TimesheetTemplate">
-            <Grid x:Name="TimesheetGrid">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0"
-                           Text="{Binding Id}"
-                           VerticalAlignment="Center" />
-                <TextBlock Grid.Column="1"
-                           Text="{Binding Status}"
-                           VerticalAlignment="Center" />
-            </Grid>
-        </ControlTemplate>
-    </UserControl.Resources>
-
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <phone:LongListSelector x:Name="TimesheetLongListSelector"
-                                Template="{StaticResource TimesheetTemplate}"
-                                ItemsSource="{Binding}"
-                                SelectionChanged="LongListSelector_OnSelectionChanged" />
+       <Grid.RowDefinitions>
+           <RowDefinition Height="Auto"/>
+           <RowDefinition Height="*"/>
+       </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="0">
+            <TextBlock Text="{Binding StartsAt}"
+                        VerticalAlignment="Center" />
+            <TextBlock Text=" to "
+                        VerticalAlignment="Center" />
+            <TextBlock Text="{Binding EndsAt}"
+                        VerticalAlignment="Center" />
+        </StackPanel>
+        
+        <phone:Pivot Grid.Row="1">
+            <phone:Pivot.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock FontSize="15"
+                                Text="{Binding}" />
+                </DataTemplate>
+                
+            </phone:Pivot.HeaderTemplate>
+            
+            <phone:PivotItem Header="Monday">
+                
+            </phone:PivotItem>
+
+            <phone:PivotItem Header="Tuesday">
+
+            </phone:PivotItem>
+
+            <phone:PivotItem Header="Wednesday">
+
+            </phone:PivotItem>
+
+            <phone:PivotItem Header="Thursday">
+
+            </phone:PivotItem>
+
+            <phone:PivotItem Header="FRIDAY!">
+
+            </phone:PivotItem>
+
+            <phone:PivotItem Header="Saturday">
+
+            </phone:PivotItem>
+        
+            <phone:PivotItem Header="Sunday">
+
+            </phone:PivotItem>
+
+        </phone:Pivot>
+<!--        <ListBox x:Name="TimesheetListBox"-->
+<!--                 Grid.Row="1"-->
+<!--                 VerticalAlignment="Center"-->
+<!--                 ItemsSource="{Binding Tasks}"-->
+<!--                 SelectionChanged="ListBox_OnSelectionChanged">-->
+<!--            <ListBox.ItemTemplate>-->
+<!--                <DataTemplate>-->
+<!--                    <Grid x:Name="TaskGrid">-->
+<!--                        <Grid.RowDefinitions>-->
+<!--                            <RowDefinition Height="Auto" />-->
+<!--                            <RowDefinition Height="Auto" />-->
+<!--                        </Grid.RowDefinitions>-->
+<!--                        <TextBlock Text="{Binding Date}"-->
+<!--                                   Grid.Row="0" />-->
+<!--                        <TextBlock Text="{Binding ProjectTaskId}"-->
+<!--                                   Grid.Row="1" />-->
+<!--                    </Grid>-->
+<!--                </DataTemplate>-->
+<!--            </ListBox.ItemTemplate>-->
+<!--                        <ListBox.ItemsPanel>-->
+<!--                <ItemsPanelTemplate>-->
+<!--                    <StackPanel Orientation="Horizontal"/>-->
+<!--                </ItemsPanelTemplate>-->
+<!--            </ListBox.ItemsPanel>-->
+<!--        </ListBox>-->
     </Grid>
 </UserControl>

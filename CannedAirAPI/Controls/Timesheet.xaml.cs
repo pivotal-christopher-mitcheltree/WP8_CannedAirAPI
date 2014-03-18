@@ -17,9 +17,9 @@ namespace CannedAirAPI.Controls
             InitializeComponent();
         }
 
-        private void LongListSelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         private void Timesheet_OnLoaded(object sender, RoutedEventArgs e)
