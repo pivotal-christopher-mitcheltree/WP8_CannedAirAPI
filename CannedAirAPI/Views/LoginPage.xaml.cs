@@ -38,12 +38,12 @@ namespace CannedAirAPI.Views
         //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
         //    ApplicationBar.MenuItems.Add(appBarMenuItem);
         //}
-        private void LoginButton_OnClick(object sender, RoutedEventArgs e)
+        private async void LoginButton_OnClick(object sender, RoutedEventArgs e)
         {
             var mvm = DataContext as LoginViewModel;
             if (mvm != null)
             {
-                mvm.UserLogin();
+                await mvm.UserLogin();
                 if (mvm.IsInvalidLogin == 0)
                     NavigationService.Navigate(new Uri("/Views/MainPage.xaml", UriKind.Relative));
             }

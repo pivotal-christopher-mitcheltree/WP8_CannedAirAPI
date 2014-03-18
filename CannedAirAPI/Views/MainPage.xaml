@@ -32,24 +32,45 @@
             <phone:Pivot>
                 <phone:Pivot.HeaderTemplate>
                     <DataTemplate>
-                        <TextBlock FontSize="20" Text="{Binding}" />
+                        <TextBlock FontSize="25" Text="{Binding}" />
                     </DataTemplate>
                 </phone:Pivot.HeaderTemplate>
+                
                 <phone:PivotItem Header="Current Week">
+                    <ProgressBar x:Name="CurrentWeekBar"
+                                 IsIndeterminate="True"
+                                 IsEnabled="{Binding IsLoading}"
+                                 Opacity="{Binding IsLoading}" />
+                    
+                    
+                    
+                    
                 </phone:PivotItem>
+                
                 <phone:PivotItem Header="Next Week">
-
+                    <ProgressBar x:Name="NextWeekBar"
+                                 IsIndeterminate="True"
+                                 IsEnabled="{Binding IsLoading}"
+                                 Opacity="{Binding IsLoading}" />
                 </phone:PivotItem>
+                
                 <phone:PivotItem Header="Time Off">
 
                 </phone:PivotItem>
+                
                 <phone:PivotItem Header="Settings">
 
                 </phone:PivotItem>
+                
                 <phone:PivotItem Header="Previous Week">
-
+                    <ProgressBar x:Name="PreviousWeekBar"
+                                 IsIndeterminate="True"
+                                 IsEnabled="{Binding IsLoading}"
+                                 Opacity="{Binding IsLoading}"/>
                 </phone:PivotItem>
+                
             </phone:Pivot>
+            
         </Grid>
     </Grid>
 

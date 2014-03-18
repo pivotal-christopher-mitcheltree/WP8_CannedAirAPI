@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using CannedAirAPI.Models;
 using CannedAirAPI.Services;
 using CannedAirAPI.Singletons;
@@ -75,7 +76,7 @@ namespace CannedAirAPI.ViewModel
             }
         }
 
-        public async void UserLogin()
+        public async Task<bool> UserLogin()
         {
             IsLoading = true;
             var headers = new Dictionary<string, string>();
@@ -83,18 +84,17 @@ namespace CannedAirAPI.ViewModel
             headers.Add("password", Password);
             headers.Add("environment", "sandbox");
             const string url = "http://cannedair-staging.cfapps.io/v1/login";
-            var response = await _loginservice.GetFromUri(url, headers);
+            var response = await _loginservice.GetCurrentUser(url, headers);
+            IsLoading = false;
             if (!String.IsNullOrEmpty(response))
             {
                 IsInvalidLogin = 0;
                 var loginResponse = JsonConvert.DeserializeObject<Login>(response);
                 CurrentUser.Initialize(headers["username"], headers["password"], loginResponse.OpenAirId, loginResponse.RoleId);
+                return true;
             }
-            else
-            {
-                IsInvalidLogin = 1;
-            }
-            IsLoading = false;
+            IsInvalidLogin = 1;
+            return false;
         }
     }
 }

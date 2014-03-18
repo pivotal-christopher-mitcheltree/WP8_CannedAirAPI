@@ -12,11 +12,11 @@ namespace CannedAirAPI.Services
 {
     public interface ILoginService
     {
-        Task<string> GetFromUri(string uriString, Dictionary<string, string> headers);
+        Task<string> GetCurrentUser(string uriString, Dictionary<string, string> headers);
     }
     class LoginService : ILoginService
     {
-        public async Task<string> GetFromUri(string uriString, Dictionary<string, string> headers)
+        public async Task<string> GetCurrentUser(string uriString, Dictionary<string, string> headers)
         {
             try
             {
