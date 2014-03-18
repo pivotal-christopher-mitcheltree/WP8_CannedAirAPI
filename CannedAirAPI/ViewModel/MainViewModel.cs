@@ -36,7 +36,7 @@ namespace CannedAirAPI.ViewModel
         {
             var headers = new Dictionary<string, string>();
             headers.Add("username", "gweresch" );
-            headers.Add("password", "passworde");
+            headers.Add("password", "password");
             headers.Add("environment", "sandbox");
             const string url = "http://cannedair-staging.cfapps.io/v1/login";
             var response = await _loginservice.GetFromUri(url, headers);
@@ -44,6 +44,10 @@ namespace CannedAirAPI.ViewModel
             {
                 var loginResponse = JsonConvert.DeserializeObject<Login>(response);
                 CurrentUser.Initialize(headers["username"], headers["password"], loginResponse.OpenAirId, loginResponse.RoleId);
+            }
+            else
+            {
+                //something happens like error message
             }
         }
     }

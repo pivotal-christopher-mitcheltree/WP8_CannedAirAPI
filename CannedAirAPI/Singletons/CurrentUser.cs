@@ -8,56 +8,29 @@ namespace CannedAirAPI.Singletons
 {
     public class CurrentUser
     {
-        private static CurrentUser instance;
+        //make the instance of itself public. We do not need a GetInstance
+        public static CurrentUser Instance;
+        private static bool _hasUserBeenInitialized;
 
-        private readonly string _password;
-        private readonly string _userName;
-        private readonly string _openAirId;
-        private readonly string _roleId;
+        public string Username { get; private set; }
+        public string Password { get; private set; }
+        public string OpenAirId { get; private set; }
+        public string RoleId { get; private set; }
 
-        private CurrentUser(string userName, string password, string openAirId, string roleId)
-        {
-            _userName = userName;
-            _password = password;
-            _openAirId = openAirId;
-            _roleId = roleId;
-        }
+        //constructor should not take params
+        private CurrentUser() {}
 
         public static void Initialize(string username, string password, string openAirId, string roleId)
         {
-             instance = new CurrentUser(username, password, openAirId, roleId);
-        }
-
-        public static CurrentUser GetInstance()
-        {
-            if (instance == null)
+            if (_hasUserBeenInitialized) return;
+            Instance = new CurrentUser
             {
-                throw new Exception("Please initialize current user!");
-            }
-            else
-            {
-                return instance;
-            }
-        }
-
-        public string GetUserName
-        {
-            get { return _userName; }
-        }
-
-        public string GetPassword
-        {
-            get { return _password; }
-        }
-
-        public string GetOpenAirId
-        {
-            get { return _openAirId; }
-        }
-
-        public string GetRoleId
-        {
-            get { return _roleId; }
+                Username = username,
+                Password = password,
+                OpenAirId = openAirId,
+                RoleId = roleId,
+            };
+            _hasUserBeenInitialized = true;
         }
     }
 }
