@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CannedAirAPI.Models;
 using CannedAirAPI.Services;
 using CannedAirAPI.Singletons;
@@ -36,8 +37,8 @@ namespace CannedAirAPI.ViewModel
             }
         }
 
-        private Timesheet _previousTimesheet = new Timesheet();
-        public Timesheet PreviousTimesheet
+        private TimesheetWeek _previousTimesheet;
+        public TimesheetWeek PreviousTimesheet
         {
             get { return _previousTimesheet; }
             set
@@ -47,8 +48,8 @@ namespace CannedAirAPI.ViewModel
             }
         }
 
-        private Timesheet _currentTimesheet = new Timesheet();
-        public Timesheet CurrentTimesheet
+        private TimesheetWeek _currentTimesheet;
+        public TimesheetWeek CurrentTimesheet
         {
             get { return _currentTimesheet; }
             set
@@ -58,8 +59,8 @@ namespace CannedAirAPI.ViewModel
             }
         }
 
-        private Timesheet _nextTimesheet = new Timesheet();
-        public Timesheet NextTimesheet
+        private TimesheetWeek _nextTimesheet;
+        public TimesheetWeek NextTimesheet
         {
             get { return _nextTimesheet; }
             set
@@ -69,7 +70,6 @@ namespace CannedAirAPI.ViewModel
             }
         }
 
-
         private List<Timesheet> _timesheets = new List<Timesheet>();
         public List<Timesheet> Timesheets
         {
@@ -77,12 +77,11 @@ namespace CannedAirAPI.ViewModel
             set
             {
                 _timesheets = value;
-                PreviousTimesheet = _timesheets[0];
-                CurrentTimesheet = _timesheets[1];
-                NextTimesheet = _timesheets[2];
+                PreviousTimesheet = new TimesheetWeek(_timesheets[0]);
+                CurrentTimesheet = new TimesheetWeek(_timesheets[1]);
+                NextTimesheet = new TimesheetWeek(_timesheets[2]);
             }
         }
-
 
         public MainViewModel(IMainService mainservice)
         {
@@ -127,6 +126,64 @@ namespace CannedAirAPI.ViewModel
                 // TODO: failure
             }
             IsLoading = false;
+        }
+
+        public class TimesheetWeek
+        {
+            public Timesheet OriginalTimesheet { get; set; }
+            public Dictionary<string, Day> Days;
+
+            public List<string> KeyList { get; set; } //
+            public List<Day> ValueList { get; set; } //
+            
+            public TimesheetWeek(Timesheet timesheet)
+            {
+                InitializeDaysDictionary();
+                OriginalTimesheet = timesheet;
+                
+                KeyList = new List<string>(); //
+                ValueList = new List<Day>(); //
+
+                foreach (var task in timesheet.Tasks)
+                {
+                    var day = Convert.ToDateTime(task.Date).DayOfWeek.ToString().ToLower();
+                    if (Days.ContainsKey(day))
+                    {
+                        Days[day].TotalHours += Convert.ToDouble(task.Hours);
+                        Days[day].Tasks.Add(task);
+                    }
+                }
+
+                KeyList = Days.Keys.ToList(); //
+                ValueList = Days.Values.ToList(); //
+            }
+
+            private void InitializeDaysDictionary()
+            {
+                Days = new Dictionary<string, Day>
+                {
+                    {"monday", new Day()},
+                    {"tuesday", new Day()},
+                    {"wednesday", new Day()},
+                    {"thursday", new Day()},
+                    {"friday", new Day()},
+                    {"saturday", new Day()},
+                    {"sunday", new Day()}
+                };
+            }
+
+            public class Day // TODO: accessor?
+            {
+                public Day()
+                {
+                    Tasks = new List<Task>();
+                    TotalHours = 0;
+                    Date = String.Empty;
+                }
+                public string Date { get; set; }
+                public double TotalHours { get; set; }
+                public List<Task> Tasks { get; set; }
+            }
         }
     }
 }

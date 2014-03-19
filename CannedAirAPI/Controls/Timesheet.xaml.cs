@@ -24,7 +24,12 @@ namespace CannedAirAPI.Controls
 
         private void Timesheet_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var dataContext = this.DataContext as Timesheet;
+            var dataContext = DataContext;
+        }
+
+        private void DaysPivot_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var asdf = DaysPivot.ItemsSource;
         }
     }
 }

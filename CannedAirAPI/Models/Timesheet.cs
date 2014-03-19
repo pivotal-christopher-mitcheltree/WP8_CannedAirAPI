@@ -7,12 +7,6 @@ using Newtonsoft.Json;
 
 namespace CannedAirAPI.Models
 {
-    //[JsonConverter(typeof(TimesheetsConverter))]
-    public class Timesheets
-    {
-        
-    }
-
     public class Timesheet
     {
         [JsonProperty(PropertyName = "id")]

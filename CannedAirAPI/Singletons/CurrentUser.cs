@@ -10,8 +10,8 @@ namespace CannedAirAPI.Singletons
     {
         //make the instance of itself public. We do not need a GetInstance
         public static CurrentUser Instance;
-        private static bool _hasUserBeenInitialized;
 
+        public static bool HasUserBeenInitialized { get; private set; }
         public string Username { get; private set; }
         public string Password { get; private set; }
         public string OpenAirId { get; private set; }
@@ -22,7 +22,7 @@ namespace CannedAirAPI.Singletons
 
         public static void Initialize(string username, string password, string openAirId, string roleId)
         {
-            if (_hasUserBeenInitialized) return;
+            if (HasUserBeenInitialized) return;
             Instance = new CurrentUser
             {
                 Username = username,
@@ -30,7 +30,7 @@ namespace CannedAirAPI.Singletons
                 OpenAirId = openAirId,
                 RoleId = roleId,
             };
-            _hasUserBeenInitialized = true;
+            HasUserBeenInitialized = true;
         }
     }
 }

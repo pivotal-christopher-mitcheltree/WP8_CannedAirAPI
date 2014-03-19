@@ -19,76 +19,73 @@
         
         <StackPanel Orientation="Horizontal"
                     Grid.Row="0">
-            <TextBlock Text="{Binding StartsAt}"
+            <TextBlock Text="{Binding OriginalTimesheet.StartsAt}"
                         VerticalAlignment="Center" />
             <TextBlock Text=" to "
                         VerticalAlignment="Center" />
-            <TextBlock Text="{Binding EndsAt}"
+            <TextBlock Text="{Binding OriginalTimesheet.EndsAt}"
                         VerticalAlignment="Center" />
         </StackPanel>
-        
-        <phone:Pivot Grid.Row="1">
+
+        <phone:Pivot x:Name="DaysPivot"
+                     Grid.Row="1"
+                     ItemsSource="{Binding KeyList}"
+                     SelectionChanged="DaysPivot_OnSelectionChanged">
             <phone:Pivot.HeaderTemplate>
                 <DataTemplate>
                     <TextBlock FontSize="15"
-                                Text="{Binding}" />
+                               Text="{Binding}" />
                 </DataTemplate>
-                
             </phone:Pivot.HeaderTemplate>
-            
-            <phone:PivotItem Header="Monday">
-                
-            </phone:PivotItem>
-
-            <phone:PivotItem Header="Tuesday">
-
-            </phone:PivotItem>
-
-            <phone:PivotItem Header="Wednesday">
-
-            </phone:PivotItem>
-
-            <phone:PivotItem Header="Thursday">
-
-            </phone:PivotItem>
-
-            <phone:PivotItem Header="FRIDAY!">
-
-            </phone:PivotItem>
-
-            <phone:PivotItem Header="Saturday">
-
-            </phone:PivotItem>
-        
-            <phone:PivotItem Header="Sunday">
-
-            </phone:PivotItem>
-
-        </phone:Pivot>
-<!--        <ListBox x:Name="TimesheetListBox"-->
-<!--                 Grid.Row="1"-->
-<!--                 VerticalAlignment="Center"-->
-<!--                 ItemsSource="{Binding Tasks}"-->
-<!--                 SelectionChanged="ListBox_OnSelectionChanged">-->
-<!--            <ListBox.ItemTemplate>-->
-<!--                <DataTemplate>-->
-<!--                    <Grid x:Name="TaskGrid">-->
-<!--                        <Grid.RowDefinitions>-->
-<!--                            <RowDefinition Height="Auto" />-->
-<!--                            <RowDefinition Height="Auto" />-->
-<!--                        </Grid.RowDefinitions>-->
-<!--                        <TextBlock Text="{Binding Date}"-->
-<!--                                   Grid.Row="0" />-->
-<!--                        <TextBlock Text="{Binding ProjectTaskId}"-->
-<!--                                   Grid.Row="1" />-->
-<!--                    </Grid>-->
-<!--                </DataTemplate>-->
-<!--            </ListBox.ItemTemplate>-->
-<!--                        <ListBox.ItemsPanel>-->
+<!--            <phone:PivotItem>-->
 <!--                <ItemsPanelTemplate>-->
-<!--                    <StackPanel Orientation="Horizontal"/>-->
+<!--                    -->
 <!--                </ItemsPanelTemplate>-->
-<!--            </ListBox.ItemsPanel>-->
-<!--        </ListBox>-->
+<!--            </phone:PivotItem>-->
+<!--            <phone:PivotItem>-->
+<!--                <ItemsPanelTemplate>-->
+<!---->
+<!--                </ItemsPanelTemplate>-->
+<!--            </phone:PivotItem>-->
+        </phone:Pivot>
+
+        <!--        <phone:Pivot Grid.Row="1">-->
+<!--            <phone:Pivot.HeaderTemplate>-->
+<!--                <DataTemplate>-->
+<!--                    <TextBlock FontSize="15"-->
+<!--                                Text="{Binding}" />-->
+<!--                </DataTemplate>-->
+<!--                -->
+<!--            </phone:Pivot.HeaderTemplate>-->
+<!--            -->
+<!--            <phone:PivotItem Header="Monday">-->
+<!--                -->
+<!--            </phone:PivotItem>-->
+<!---->
+<!--            <phone:PivotItem Header="Tuesday">-->
+<!---->
+<!--            </phone:PivotItem>-->
+<!---->
+<!--            <phone:PivotItem Header="Wednesday">-->
+<!---->
+<!--            </phone:PivotItem>-->
+<!---->
+<!--            <phone:PivotItem Header="Thursday">-->
+<!---->
+<!--            </phone:PivotItem>-->
+<!---->
+<!--            <phone:PivotItem Header="FRIDAY!">-->
+<!---->
+<!--            </phone:PivotItem>-->
+<!---->
+<!--            <phone:PivotItem Header="Saturday">-->
+<!---->
+<!--            </phone:PivotItem>-->
+<!--        -->
+<!--            <phone:PivotItem Header="Sunday">-->
+<!---->
+<!--            </phone:PivotItem>-->
+<!---->
+<!--        </phone:Pivot>-->
     </Grid>
 </UserControl>

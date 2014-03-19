@@ -5,6 +5,7 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using CannedAirAPI.Singletons;
 using CannedAirAPI.ViewModel;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
@@ -18,7 +19,6 @@ namespace CannedAirAPI.Views
         public LoginPage()
         {
             InitializeComponent();
-
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
         }
@@ -38,6 +38,15 @@ namespace CannedAirAPI.Views
         //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
         //    ApplicationBar.MenuItems.Add(appBarMenuItem);
         //}
+
+        private void LoginPage_OnLoaded(object sender, RoutedEventArgs e)
+        {
+//            if (CurrentUser.Instance != null && CurrentUser.HasUserBeenInitialized)
+//            {
+//                NavigationService.Navigate(new Uri("/Views/MainPage.xaml", UriKind.Relative));
+//            }
+        }
+
         private async void LoginButton_OnClick(object sender, RoutedEventArgs e)
         {
             var mvm = DataContext as LoginViewModel;
@@ -47,7 +56,6 @@ namespace CannedAirAPI.Views
                 if (mvm.IsInvalidLogin == 0)
                     NavigationService.Navigate(new Uri("/Views/MainPage.xaml", UriKind.Relative));
             }
-            
         }
     }
 }
